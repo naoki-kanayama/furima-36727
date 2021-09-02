@@ -56,27 +56,27 @@ RSpec.describe User, type: :model do
         @user.save
         another_user = FactoryBot.build(:user, email: @user.email)
         another_user.valid?
-        expect(another_user.errors.full_messages).to include "Email has already been taken"
+        expect(another_user.errors.full_messages).to include 'Email has already been taken'
       end
       it 'last_nameは全角（漢字・ひらがな・カタカナ）でないと登録できない' do
         @user.last_name = 'aaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include "Last name 全角（漢字・ひらがな・カタカナ）を使用してください"
+        expect(@user.errors.full_messages).to include 'Last name 全角（漢字・ひらがな・カタカナ）を使用してください'
       end
       it 'fist_nameは全角（漢字・ひらがな・カタカナ）でないと登録できない' do
         @user.first_name = 'aaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include "First name 全角（漢字・ひらがな・カタカナ）を使用してください"
+        expect(@user.errors.full_messages).to include 'First name 全角（漢字・ひらがな・カタカナ）を使用してください'
       end
       it 'last_name_kanaは全角カタカナでないと登録できない' do
         @user.last_name_kana = 'あああ'
         @user.valid?
-        expect(@user.errors.full_messages).to include "Last name kana 全角カタカナを使用してください"
+        expect(@user.errors.full_messages).to include 'Last name kana 全角カタカナを使用してください'
       end
       it 'first_name _kanaは全角カタカナでないと登録できない' do
         @user.first_name_kana = 'あああ'
         @user.valid?
-        expect(@user.errors.full_messages).to include "First name kana 全角カタカナを使用してください"
+        expect(@user.errors.full_messages).to include 'First name kana 全角カタカナを使用してください'
       end
     end
   end
