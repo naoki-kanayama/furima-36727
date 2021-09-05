@@ -57,6 +57,26 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include "Prefecture can't be blank"
       end
+      it '金額が300円未満では登録できない' do
+        @item.price = '200'
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price is out of setting range"
+      end
+      it '金額は10_000_000円以上では登録できない' do
+        @item.price = '10000000'
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price is out of setting range"
+      end
+      it '金額は半角数値以外では登録できない' do
+        @item.price = 'あああ'
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price is out of setting range"
+      end
+      it 'userが紐付いていなければ登録できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include "User must exist"
+      end
     end
   end
 end
