@@ -128,7 +128,6 @@
     </div>
     <ul class='item-lists'>
       <% @items.each do |item| %>
-        <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
         <li class='list'>
           <%= link_to "#" do %>
           <div class='item-img-content'>
@@ -156,10 +155,8 @@
           <% end %>
         </li>
       <% end %>
-        <%# //商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
 
         <% if @items.empty? %>
-          <%# 商品がある場合は表示されないようにしましょう %>
           <li class='list'>
             <%= link_to '#' do %>
               <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
@@ -177,7 +174,6 @@
               </div>
             <% end %>
           </li>
-          <%# //商品がある場合は表示されないようにしましょう %>
         <% end %>
     </ul>
   </div>
