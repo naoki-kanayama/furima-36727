@@ -1,6 +1,6 @@
 class RecordDestination
   include ActiveModel::Model
-  attr_accessor :city, :address, :building_number, :address_number, :tel_number, :record_id, :user_id, :item_id, :prefecture_id
+  attr_accessor :city, :address, :building_number, :address_number, :tel_number, :record_id, :user_id, :item_id, :prefecture_id, :token
   validates :prefecture_id, presence: true, numericality: { other_than: 1, message: "can't be blank"}
   validates :city, presence: true
   validates :address, presence: true
@@ -8,6 +8,7 @@ class RecordDestination
   validates :tel_number, presence: true, format: {with: /\A\d{10,11}\z/, message: "is invalid Not include hyphen(-). Enter half-width" }
   validates :user_id, presence: true
   validates :item_id, presence: true
+  validates :token, presence: true
     
     def save
       record = Record.create(user_id: user_id, item_id: item_id)

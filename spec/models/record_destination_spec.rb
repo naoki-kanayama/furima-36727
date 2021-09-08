@@ -73,6 +73,11 @@ RSpec.describe RecordDestination, type: :model do
         @record_destination.valid?
         expect(@record_destination.errors.full_messages).to include "Tel number is invalid Not include hyphen(-). Enter half-width"
       end
+      it 'tokenが空のとき（クレジットカード情報が入力されていないとき）' do
+        @record_destination.token = nil
+        @record_destination.valid?
+        expect(@record_destination.errors.full_messages).to include "Token can't be blank"
+      end
     end
   end
 end
