@@ -1,5 +1,6 @@
 class RecordsController < ApplicationController
   before_action :authenticate_user!
+  before_action :sold_out
   def index
     @item = Item.find(params[:item_id])
     if current_user.id == @item.user_id
@@ -34,6 +35,11 @@ class RecordsController < ApplicationController
       currency: 'jpy'
     )
   end
-
+  def sold_out
+    @item = Item.find(params[:item_id])
+    if @item.record.present?
+      redirect_to root_path
+    end
+  end
 end
 
