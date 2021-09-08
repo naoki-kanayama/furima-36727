@@ -1,8 +1,8 @@
 class RecordsController < ApplicationController
   before_action :authenticate_user!
   before_action :sold_out
+  before_action @item = Item.find(params[:item_id])
   def index
-    @item = Item.find(params[:item_id])
     if current_user.id == @item.user_id
       redirect_to root_path
     end
@@ -10,7 +10,6 @@ class RecordsController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @record_destination = RecordDestination.new(record_params)
     if @record_destination.valid?
       pay_item
@@ -23,7 +22,6 @@ class RecordsController < ApplicationController
 
   private
   def record_params
-    @item = Item.find(params[:item_id])
     params.require(:record_destination).permit(:city, :prefecture_id, :address, :building_number, :address_number, :tel_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
   end
 
@@ -36,7 +34,6 @@ class RecordsController < ApplicationController
     )
   end
   def sold_out
-    @item = Item.find(params[:item_id])
     if @item.record.present?
       redirect_to root_path
     end
