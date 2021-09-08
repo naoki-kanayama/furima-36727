@@ -68,8 +68,13 @@ RSpec.describe RecordDestination, type: :model do
         @record_destination.valid?
         expect(@record_destination.errors.full_messages).to include "Address number is invalid. Include hyphen(-). Enter half-width"
       end
-      it '電話番号の桁数が１０桁または１１桁でないとき' do
+      it '電話番号の桁数が１２桁以上の時' do
         @record_destination.tel_number = '09001234567890'
+        @record_destination.valid?
+        expect(@record_destination.errors.full_messages).to include "Tel number is invalid Not include hyphen(-). Enter half-width"
+      end
+      it '電話番号の桁数が９桁以下の時' do
+        @record_destination.tel_number = '090000000'
         @record_destination.valid?
         expect(@record_destination.errors.full_messages).to include "Tel number is invalid Not include hyphen(-). Enter half-width"
       end
@@ -77,6 +82,16 @@ RSpec.describe RecordDestination, type: :model do
         @record_destination.token = nil
         @record_destination.valid?
         expect(@record_destination.errors.full_messages).to include "Token can't be blank"
+      end
+      it 'ユーザーが紐づいていない時' do
+        @record_destination.user_id = nil
+        @record_destination.valid?
+        expect(@record_destination.errors.full_messages).to include "User can't be blank"
+      end
+      it '商品が紐づいていない時' do
+        @record_destination.item_id = nil
+        @record_destination.valid?
+        expect(@record_destination.errors.full_messages).to include "Item can't be blank"
       end
     end
   end
