@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :sold_out, only: [:edit, :update, :destroy]
   def index
     @items = Item.all.order('created_at DESC')
   end
@@ -54,5 +55,12 @@ class ItemsController < ApplicationController
   
   def item_params
     params.require(:item).permit(:item_name, :category_id, :status_id, :price, :text, :shipping_date_id, :prefecture_id, :delivery_fee_id, :image).merge(user_id: current_user.id)
+  end
+
+  def sold_out
+    @item = Item.find(params[:id])
+    if @item.record.present?
+      redirect_to root_path
+    end
   end
 end
