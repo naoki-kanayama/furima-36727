@@ -44,7 +44,7 @@ class ItemsController < ApplicationController
     if @item.destroy
       redirect_to root_path
     end
-    if current_user != @item.user_id
+    if current_user.id != @item.user_id
       redirect_to root_path
     end
   end
